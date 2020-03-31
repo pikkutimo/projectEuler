@@ -1,33 +1,36 @@
 #include <iostream>
-#include <vector>
+#include <cmath>
+
+int numberOfDivisors(int &);
 
 int main(int argc, char* argv[]){
-
-    //Creating the nth triangle number
-    auto n = 7;
+   
     auto number = 0;
+    auto term = 1;
 
-    for (int i = 1 ; i <= n ; ++i){
-        number += i;
+    while (numberOfDivisors(number) < 500){
+        number += term;
+        ++term;
     }
 
-    //How many divisors?
-    std::vector<int> listOfDivisors;
+    std::cout << number << std::endl;
 
-    for (int divisor = 1 ; divisor <= number ; ++divisor){
-        if (number % divisor == 0){
-            listOfDivisors.emplace_back(divisor);
+    return 0;
+}
+
+int numberOfDivisors(int &numberToTest){
+    auto counter = 0;
+    auto limit = sqrt(numberToTest);
+
+    for (int i = 1 ; i <= limit ; ++i){
+        if (numberToTest % i == 0){
+            counter += 2;
         }
     }
 
-    //Print the results
-    std::cout << "The nth triangle number is " << number << std::endl;
-    std::cout << "There are " << listOfDivisors.size() << " divisors in that: ";
-
-    for(auto number : listOfDivisors){
-        std::cout << number << ", ";
+    if (limit*limit == numberToTest){
+        --counter;
     }
 
-    std::cout << std::endl;
-    return 0;
+    return counter;
 }
